@@ -15,8 +15,8 @@ import com.fhce.egovf.model.moduloModel;
 import com.fhce.egovf.model.moduloUsuarioModel;
 
 @RestController
-//@RequestMapping("fhce-egovf") //RequestMapping for Develop
-@RequestMapping("/fhce") // RequestMapping for Production
+@RequestMapping("fhce-egovf") //RequestMapping for Develop
+//@RequestMapping("/fhce") // RequestMapping for Production
 public class moduloController {
 	
 	@Autowired

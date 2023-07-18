@@ -19,8 +19,8 @@ import com.fhce.egovf.model.passModel;
 import com.fhce.egovf.model.usuarioModel;
 
 @RestController
-//@RequestMapping("/fhce-egovf") //RequestMapping for Develop
-@RequestMapping("/fhce") // RequestMapping for Production
+@RequestMapping("/fhce-egovf") //RequestMapping for Develop
+//@RequestMapping("/fhce") // RequestMapping for Production
 public class usuarioController {
 	
 	@Autowired

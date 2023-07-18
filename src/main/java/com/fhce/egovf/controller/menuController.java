@@ -19,8 +19,8 @@ import com.fhce.egovf.model.menuModel;
 import com.fhce.egovf.model.permisoModel;
 
 @RestController
-//@RequestMapping("/fhce-egovf") //RequestMapping for Develop
-@RequestMapping("/fhce") // RequestMapping for Production
+@RequestMapping("/fhce-egovf") //RequestMapping for Develop
+//@RequestMapping("/fhce") // RequestMapping for Production
 public class menuController {
 	
 	@Autowired

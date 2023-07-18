@@ -5,12 +5,14 @@ public class subModel {
 	private String titulo;
 	private String ruta;
 	private String obs;
+	private String imagen;
 	
-	public subModel(Long id,String titulo, String ruta, String obs) {
+	public subModel(Long id,String titulo, String ruta, String obs,String imagen) {
 		this.id=id;
 		this.titulo = titulo;
 		this.ruta = ruta;
 		this.obs = obs;
+		this.imagen = imagen;
 	}
 	public String getTitulo() {
 		return titulo;
@@ -36,4 +38,11 @@ public class subModel {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	public String getImagen() {
+		return imagen;
+	}
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+	
 }

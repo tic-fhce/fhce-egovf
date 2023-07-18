@@ -41,10 +41,10 @@ public class EgovfApplication  /*extends SpringBootServletInitializer*/{
 			http.csrf().disable()
 			.addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 			.authorizeRequests()
-			.antMatchers(HttpMethod.GET,"/fhce/listarUsuario").permitAll()
-			.antMatchers(HttpMethod.POST,"/fhce/loginUsuario").permitAll()
-			//.antMatchers(HttpMethod.GET,"/fhce-egovf/listarUsuario").permitAll()
-			//.antMatchers(HttpMethod.POST,"/fhce-egovf/loginUsuario").permitAll()
+			//.antMatchers(HttpMethod.GET,"/fhce/listarUsuario").permitAll()
+			//.antMatchers(HttpMethod.POST,"/fhce/loginUsuario").permitAll()
+			.antMatchers(HttpMethod.GET,"/fhce-egovf/listarUsuario").permitAll()
+			.antMatchers(HttpMethod.POST,"/fhce-egovf/loginUsuario").permitAll()
 			.anyRequest().authenticated();
 			http.cors();
 				
@@ -53,7 +53,7 @@ public class EgovfApplication  /*extends SpringBootServletInitializer*/{
 		@Bean
 		CorsConfigurationSource corsConfigurationSource() {
 			CorsConfiguration configuration=new CorsConfiguration();
-			configuration.setAllowedOrigins(Arrays.asList("url cliente"));
+			configuration.setAllowedOrigins(Arrays.asList("http://192.168.31.45:8081/"));
 			configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT"));
 			configuration.setAllowCredentials(true);
 			configuration.setAllowedHeaders(Arrays.asList("*"));

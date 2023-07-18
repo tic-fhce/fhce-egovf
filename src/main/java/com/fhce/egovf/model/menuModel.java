@@ -31,6 +31,9 @@ public class menuModel {
 	@Column
 	private String _05obs;
 	
+	@Column
+	private String _06imagen;
+	
 	public Long getId() {
 		return id;
 	}
@@ -66,5 +69,12 @@ public class menuModel {
 	}
 	public void set_05obs(String _05obs) {
 		this._05obs = _05obs;
-	}	
+	}
+	public String get_06imagen() {
+		return _06imagen;
+	}
+	public void set_06imagen(String _06imagen) {
+		this._06imagen = _06imagen;
+	}
+	
 }

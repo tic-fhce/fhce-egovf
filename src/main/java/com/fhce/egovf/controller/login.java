@@ -32,8 +32,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @RestController
-//@RequestMapping("/fhce-egovf") //RequestMapping for Develop
-@RequestMapping("/fhce") // RequestMapping for Production
+@RequestMapping("/fhce-egovf") //RequestMapping for Develop
+//@RequestMapping("/fhce") // RequestMapping for Production
 public class login {
 	@Autowired
 	private usuarioDao usuarioDao;
@@ -75,6 +75,8 @@ public class login {
 			sesion.setCelular(listaUsuarioModel.get(0).get_06celular());
 			sesion.setPass(pass);
 			sesion.setToken(token);
+			sesion.setUnidad(listaUsuarioModel.get(0).get_08unidad());
+			sesion.setSigla(listaUsuarioModel.get(0).get_10sigla());
 			
 			List<menuModel>menuModel=menuDao.findAll();
 			List<permisoModel> permisoModel=permisoDao.getPermisos(listaUsuarioModel.get(0).get_01cif());
@@ -96,7 +98,7 @@ public class login {
 			for(int i=0;i<mainMenu.size();i++) {
 				for(int j=0;j<menuModelAux.size();j++) {
 					if(mainMenu.get(i).getIndex()==menuModelAux.get(j).get_04subnivel() && menuModelAux.get(j).get_03nivel()>0) {
-						mainMenu.get(i).addSubModel(new subModel(menuModelAux.get(j).getId(),menuModelAux.get(j).get_01titulo(),menuModelAux.get(j).get_02ruta(),menuModelAux.get(j).get_05obs()));						
+						mainMenu.get(i).addSubModel(new subModel(menuModelAux.get(j).getId(),menuModelAux.get(j).get_01titulo(),menuModelAux.get(j).get_02ruta(),menuModelAux.get(j).get_05obs(),menuModelAux.get(j).get_06imagen()));						
 					}
 				}
 			}
