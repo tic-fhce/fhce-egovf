@@ -26,7 +26,7 @@ public class EgovfApplication  /*extends SpringBootServletInitializer*/{
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(EgovfApplication.class);
-	} para produccion*/
+	}*//* para produccion*/
 
 	public static void main(String[] args) {
 		SpringApplication.run(EgovfApplication.class, args);
@@ -53,7 +53,7 @@ public class EgovfApplication  /*extends SpringBootServletInitializer*/{
 		@Bean
 		CorsConfigurationSource corsConfigurationSource() {
 			CorsConfiguration configuration=new CorsConfiguration();
-			configuration.setAllowedOrigins(Arrays.asList("http://192.168.31.45:8081/"));
+			configuration.setAllowedOrigins(Arrays.asList("http://192.168.31.45:8080/"));
 			configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT"));
 			configuration.setAllowCredentials(true);
 			configuration.setAllowedHeaders(Arrays.asList("*"));

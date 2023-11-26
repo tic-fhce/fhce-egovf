@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fhce.egovf.dao.personaDao;
 import com.fhce.egovf.dao.usuarioDao;
+import com.fhce.egovf.model.ciudadanoModel;
 import com.fhce.egovf.model.personaModel;
 import com.fhce.egovf.model.usuarioModel;
 
@@ -93,7 +94,26 @@ public class personaController {
 	}
 	
 	@GetMapping("/listaPersona")
-	public List<personaModel>listar(){
+	public List<ciudadanoModel>listar(){
+		
+		List<personaModel>persona=this.personaDao.findAll();
+		List<usuarioModel>usuario=this.usuarioDao.findAll();
+		List<ciudadanoModel>ciudadano=new ArrayList<ciudadanoModel>();
+		for(int i=0;i<persona.size();i++) {
+			for(int j=0;j<usuario.size();j++) {
+				if(persona.get(i).get_01cif().longValue()==usuario.get(j).get_01cif().longValue()) {
+					personaModel personax=persona.get(i);
+					usuarioModel usuariox=usuario.get(j);
+					ciudadano.add(new ciudadanoModel((long) (i+1),personax.get_01cif(),personax.get_02ci(), personax.get_03complemento(),personax.get_04nombre(),personax.get_05paterno(),personax.get_06materno(),personax.get_09cel(),personax.get_10correo(),usuariox.get_08unidad(), usuariox.get_10sigla()));
+					break;
+				}
+			}
+		}
+		return(ciudadano);
+	}
+	
+	@GetMapping("/listaPersonas")
+	public List<personaModel>listaPersonas(){
 		return(this.personaDao.findAll());
 	}
 	
