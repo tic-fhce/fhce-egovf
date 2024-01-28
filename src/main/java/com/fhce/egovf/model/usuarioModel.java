@@ -44,6 +44,9 @@ public class usuarioModel {
 	
 	@Column
 	private String _10sigla;
+	
+	@Column
+	private String _11foto;
 
 	public Long getId() {
 		return id;
@@ -132,5 +135,12 @@ public class usuarioModel {
 	public void set_10sigla(String _10sigla) {
 		this._10sigla = _10sigla;
 	}
-	
+
+	public String get_11foto() {
+		return _11foto;
+	}
+
+	public void set_11foto(String _11foto) {
+		this._11foto = _11foto;
+	}
 }

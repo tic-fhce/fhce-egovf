@@ -67,7 +67,7 @@ public class login {
 		}
 		
 		if(listaUsuarioModel.size()>0) {
-			System.out.print("usuario existe");
+			//System.out.print("usuario existe");
 			String token=getJwtToken(listaUsuarioModel.get(0).get_01cif().toString());
 			sesionModel sesion=new sesionModel();
 			sesion.setCif(listaUsuarioModel.get(0).get_01cif().toString());

@@ -2,14 +2,12 @@ package com.fhce.egovf.controller;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,6 +21,7 @@ import com.fhce.egovf.dao.usuarioDao;
 import com.fhce.egovf.model.ciudadanoModel;
 import com.fhce.egovf.model.personaModel;
 import com.fhce.egovf.model.usuarioModel;
+import com.fhce.egovf.obj.usuarioObj;
 
 @RestController
 @RequestMapping("/fhce-egovf") //RequestMapping for Develop
@@ -41,11 +40,11 @@ public class personaController {
 		return(persona);
 	}
 	
-	@PostMapping("/registrar")
-	public List<Integer> registrar(@RequestBody personaModel personaModel) throws Exception {
+	@PostMapping("/addPersona")
+	public List<Integer> addPersona(@RequestBody personaModel personaModel) throws Exception {
 		String c="00";
 		Long aux=null;
-		List<Integer> respuesta= new ArrayList();
+		List<Integer> respuesta= new ArrayList<Integer>();
 		respuesta.add(0);
 		respuesta.add(0);
 		respuesta.add(0);
@@ -86,6 +85,7 @@ public class personaController {
 			usuarioModel.set_08unidad("nn");
 			usuarioModel.set_09dependiente("nn");
 			usuarioModel.set_10sigla("Unidad");
+			usuarioModel.set_11foto("http://192.168.31.47/img/ima/user.png");
 			this.usuarioDao.save(usuarioModel);
 			
 		}
@@ -93,7 +93,7 @@ public class personaController {
 		
 	}
 	
-	@GetMapping("/listaPersona")
+	/*@GetMapping("/listaPersona")
 	public List<ciudadanoModel>listar(){
 		
 		List<personaModel>persona=this.personaDao.findAll();
@@ -110,7 +110,7 @@ public class personaController {
 			}
 		}
 		return(ciudadano);
-	}
+	}*/
 	
 	@GetMapping("/listaPersonas")
 	public List<personaModel>listaPersonas(){
@@ -132,4 +132,5 @@ public class personaController {
 		aux.set_06celular(personaModel.get_09cel());
 		this.usuarioDao.save(aux);
 	}
+	
 }

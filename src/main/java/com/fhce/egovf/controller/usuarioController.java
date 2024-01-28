@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fhce.egovf.dao.personaDao;
 import com.fhce.egovf.dao.usuarioDao;
-import com.fhce.egovf.model.passModel;
 import com.fhce.egovf.model.usuarioModel;
+import com.fhce.egovf.obj.passObj;
 
 @RestController
 @RequestMapping("/fhce-egovf") //RequestMapping for Develop
@@ -44,17 +44,10 @@ public class usuarioController {
 	}
 	
 	@PutMapping("/updatePass")
-	public boolean updatePass(@RequestBody passModel passModel)throws Exception {
-		usuarioModel usuario=new usuarioModel();
-		if(passModel.get_07pass().equals(pass(passModel.get_08pass()))) {
-			usuario.setId(passModel.getId());
-			usuario.set_01cif(passModel.get_01cif());
-			usuario.set_02matricula(passModel.get_02matricula());
-			usuario.set_03ci(passModel.get_03ci());
-			usuario.set_04complemento(passModel.get_04complemento());
-			usuario.set_05correo(passModel.get_05correo());
-			usuario.set_06celular(passModel.get_06celular());
-			usuario.set_07pass(pass(passModel.get_09pass()));
+	public boolean updatePass(@RequestBody passObj passObj)throws Exception {
+		usuarioModel usuario = this.usuarioDao.getUsuario(passObj.getCif());
+		if(usuario.get_07pass().equals(pass(passObj.getPass1()))) {
+			usuario.set_07pass(pass(passObj.getPass3()));
 			this.usuarioDao.save(usuario);
 			return (true);
 		}
@@ -62,16 +55,9 @@ public class usuarioController {
 			return(false);
 	}
 	@PutMapping("/updatePassAdmin")
-	public boolean updatePassAdmin(@RequestBody passModel passModel)throws Exception {
-		usuarioModel usuario=new usuarioModel();
-		usuario.setId(passModel.getId());
-		usuario.set_01cif(passModel.get_01cif());
-		usuario.set_02matricula(passModel.get_02matricula());
-		usuario.set_03ci(passModel.get_03ci());
-		usuario.set_04complemento(passModel.get_04complemento());
-		usuario.set_05correo(passModel.get_05correo());
-		usuario.set_06celular(passModel.get_06celular());
-		usuario.set_07pass(pass(passModel.get_09pass()));
+	public boolean updatePassAdmin(@RequestBody passObj passObj)throws Exception {
+		usuarioModel usuario = this.usuarioDao.getUsuario(passObj.getCif());
+		usuario.set_07pass(pass(passObj.getPass1()));
 		this.usuarioDao.save(usuario);
 		return (true);
 	}
