@@ -11,6 +11,7 @@ public class sesionModel {
 	private String pass;
 	private String unidad;
 	private String sigla;
+	private String foto;
 	
 	private List<mainmenuModel> menu;
 	
@@ -80,6 +81,14 @@ public class sesionModel {
 
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
 	}
 	
 }

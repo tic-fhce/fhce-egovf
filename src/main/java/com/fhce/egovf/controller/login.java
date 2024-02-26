@@ -77,6 +77,7 @@ public class login {
 			sesion.setToken(token);
 			sesion.setUnidad(listaUsuarioModel.get(0).get_08unidad());
 			sesion.setSigla(listaUsuarioModel.get(0).get_10sigla());
+			sesion.setFoto(listaUsuarioModel.get(0).get_11foto());
 			
 			List<menuModel>menuModel=menuDao.findAll();
 			List<permisoModel> permisoModel=permisoDao.getPermisos(listaUsuarioModel.get(0).get_01cif());

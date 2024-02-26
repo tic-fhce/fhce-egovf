@@ -53,7 +53,7 @@ public class EgovfApplication  /*extends SpringBootServletInitializer*/{
 		@Bean
 		CorsConfigurationSource corsConfigurationSource() {
 			CorsConfiguration configuration=new CorsConfiguration();
-			configuration.setAllowedOrigins(Arrays.asList("http://192.168.31.47:8080/"));
+			configuration.setAllowedOrigins(Arrays.asList("http://192.168.31.45:8080/"));
 			configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT"));
 			configuration.setAllowCredentials(true);
 			configuration.setAllowedHeaders(Arrays.asList("*"));
