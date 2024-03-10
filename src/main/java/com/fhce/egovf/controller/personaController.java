@@ -85,7 +85,7 @@ public class personaController {
 			usuarioModel.set_08unidad("nn");
 			usuarioModel.set_09dependiente("nn");
 			usuarioModel.set_10sigla("Unidad");
-			usuarioModel.set_11foto("http://192.168.31.47/img/ima/user.png");
+			usuarioModel.set_11foto("https://fhcevirtual.umsa.bo/egovf-img/imagenes/user.png");
 			this.usuarioDao.save(usuarioModel);
 			
 		}
