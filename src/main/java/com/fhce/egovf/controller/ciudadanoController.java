@@ -56,6 +56,7 @@ public class ciudadanoController {
 		ciudadanoObj.setDependiente(usuarioModel.get_09dependiente());
 		ciudadanoObj.setSigla(usuarioModel.get_10sigla());
 		ciudadanoObj.setFoto(usuarioModel.get_11foto());
+		ciudadanoObj.setEmpleado(usuarioModel.get_12empleado());
 		
 		return(ciudadanoObj);
 	}

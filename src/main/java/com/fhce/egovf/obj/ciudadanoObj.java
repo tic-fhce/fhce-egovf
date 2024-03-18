@@ -21,6 +21,7 @@ public class ciudadanoObj {
 	private String dependiente;
 	private String sigla;
 	private String foto;
+	private int empleado;
 	
 	public ciudadanoObj() {
 		super();
@@ -176,6 +177,14 @@ public class ciudadanoObj {
 
 	public void setFoto(String foto) {
 		this.foto = foto;
+	}
+
+	public int getEmpleado() {
+		return empleado;
+	}
+
+	public void setEmpleado(int empleado) {
+		this.empleado = empleado;
 	}
 	
 }
