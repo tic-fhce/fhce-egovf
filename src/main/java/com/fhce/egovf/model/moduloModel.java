@@ -24,6 +24,9 @@ public class moduloModel {
 	
 	@Column
 	private String _03imagen;
+	
+	@Column
+	private Long _04idmodulomenu;
 
 	public Long getId() {
 		return id;
@@ -56,5 +59,14 @@ public class moduloModel {
 	public void set_03imagen(String _03imagen) {
 		this._03imagen = _03imagen;
 	}
+
+	public Long get_04idmodulomenu() {
+		return _04idmodulomenu;
+	}
+
+	public void set_04idmodulomenu(Long _04idmodulomenu) {
+		this._04idmodulomenu = _04idmodulomenu;
+	}
+	
 }
 

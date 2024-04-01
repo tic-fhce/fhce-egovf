@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="menu")
-public class menuModel {
+@Table(name="modulomenu")
+public class modulomenuModel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +20,7 @@ public class menuModel {
 	private String _01titulo;
 	
 	@Column
-	private String _02ruta;
-	
-	@Column
-	private Long _03id_modulomenu;
+	private String _02icono;
 
 	public Long getId() {
 		return id;
@@ -41,22 +38,12 @@ public class menuModel {
 		this._01titulo = _01titulo;
 	}
 
-	public String get_02ruta() {
-		return _02ruta;
+	public String get_02icono() {
+		return _02icono;
 	}
 
-	public void set_02ruta(String _02ruta) {
-		this._02ruta = _02ruta;
+	public void set_02icono(String _02icono) {
+		this._02icono = _02icono;
 	}
 
-	public Long get_03id_modulomenu() {
-		return _03id_modulomenu;
-	}
-
-	public void set_03id_modulomenu(Long _03id_modulomenu) {
-		this._03id_modulomenu = _03id_modulomenu;
-	}
-	
-	
-	
 }

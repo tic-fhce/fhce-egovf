@@ -36,7 +36,7 @@ public class moduloController {
 		List<moduloUsuarioModel>listaUsuario=moduloUsuarioDao.findModuloUsuario(cif);
 		List<moduloModel>lista=new ArrayList<moduloModel>();
 		for(int i=0;i<listaUsuario.size();i++) {
-			lista.add(this.moduloDao.findModulo(listaUsuario.get(i).get_02id_modulo()));
+			lista.add(this.moduloDao.getModulo(listaUsuario.get(i).get_02id_modulo()));
 		}
 		return(lista);
 	}

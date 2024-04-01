@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fhce.egovf.dao.menuUsuarioDao;
 import com.fhce.egovf.dao.personaDao;
 import com.fhce.egovf.dao.usuarioDao;
+import com.fhce.egovf.model.menuUsuarioModel;
 import com.fhce.egovf.model.usuarioModel;
 import com.fhce.egovf.obj.passObj;
 
@@ -29,6 +31,9 @@ public class usuarioController {
 	@Autowired
 	private personaDao personaDao;
 	
+	@Autowired
+	private menuUsuarioDao menuUsuarioDao;
+	
 	@GetMapping("/listarUsuario")
 	public List<usuarioModel> listar(){
 		return usuarioDao.findAll();
@@ -40,6 +45,16 @@ public class usuarioController {
 	}
 	@PutMapping("/updateUsuario")
 	public void updateUsuario(@RequestBody usuarioModel usuarioModel) {
+		
+		if(usuarioModel.get_12empleado() == 2) {
+			menuUsuarioModel menuUsuarioModel = new menuUsuarioModel();
+			menuUsuarioModel.set_01cif(usuarioModel.get_01cif());
+			menuUsuarioModel.set_02idmenu((long)7);
+			menuUsuarioModel.set_03estado(1);
+			
+			this.menuUsuarioDao.save(menuUsuarioModel);
+		}
+		usuarioModel.set_12empleado(1);
 		this.usuarioDao.save(usuarioModel);
 	}
 	

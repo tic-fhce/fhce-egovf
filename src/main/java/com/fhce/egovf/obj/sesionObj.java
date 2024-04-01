@@ -1,8 +1,8 @@
-package com.fhce.egovf.model;
+package com.fhce.egovf.obj;
 
 import java.util.List;
 
-public class sesionModel {
+public class sesionObj {
 	
 	private String token;
 	private String cif;
@@ -12,15 +12,16 @@ public class sesionModel {
 	private String unidad;
 	private String sigla;
 	private String foto;
-	
-	private List<mainmenuModel> menu;
-	
-	public sesionModel() {
-		
+
+	public sesionObj() {
 	}
-	
+
 	public String getToken() {
 		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	public String getCif() {
@@ -47,24 +48,12 @@ public class sesionModel {
 		this.celular = celular;
 	}
 
-	public void setToken(String token) {
-		this.token = token;
-	}
-
 	public String getPass() {
 		return pass;
 	}
 
 	public void setPass(String pass) {
 		this.pass = pass;
-	}
-
-	public List<mainmenuModel> getMenu() {
-		return menu;
-	}
-
-	public void setMenu(List<mainmenuModel> menu) {
-		this.menu = menu;
 	}
 
 	public String getUnidad() {
@@ -90,5 +79,5 @@ public class sesionModel {
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
-	
+
 }

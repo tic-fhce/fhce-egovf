@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fhce.egovf.dao.menuUsuarioDao;
+import com.fhce.egovf.dao.moduloMenuUsuarioDao;
 import com.fhce.egovf.dao.personaDao;
 import com.fhce.egovf.dao.usuarioDao;
 import com.fhce.egovf.model.ciudadanoModel;
+import com.fhce.egovf.model.menuUsuarioModel;
+import com.fhce.egovf.model.moduloMenuUsuarioModel;
 import com.fhce.egovf.model.personaModel;
 import com.fhce.egovf.model.usuarioModel;
 import com.fhce.egovf.obj.usuarioObj;
@@ -34,9 +38,15 @@ public class personaController {
 	@Autowired
 	private usuarioDao usuarioDao;
 	
+	@Autowired
+	private moduloMenuUsuarioDao moduloMenuUsuarioDao;
+	
+	@Autowired
+	private menuUsuarioDao menuUsuarioDao;
+	
 	@GetMapping("/getPerfil")
 	public personaModel getPersona(@RequestParam (value="cif") Long cif) {
-		personaModel persona= personaDao.getPerfil(cif);
+		personaModel persona = personaDao.getPerfil(cif);
 		return(persona);
 	}
 	
@@ -69,11 +79,10 @@ public class personaController {
 				if(this.personaDao.getCif(aux).size()==0)
 					break;
 			}
-			System.out.print(aux);
 			personaModel.set_01cif(aux);
 			this.personaDao.save(personaModel);
 			
-			usuarioModel usuarioModel=new usuarioModel();
+			usuarioModel usuarioModel = new usuarioModel();
 			
 			usuarioModel.set_01cif(personaModel.get_01cif());
 			usuarioModel.set_02matricula((long) 0);
@@ -86,6 +95,20 @@ public class personaController {
 			usuarioModel.set_09dependiente("nn");
 			usuarioModel.set_10sigla("Unidad");
 			usuarioModel.set_11foto("https://fhcevirtual.umsa.bo/egovf-img/imagenes/user.png");
+			
+			moduloMenuUsuarioModel moduloMenuUsuarioModel = new moduloMenuUsuarioModel();
+			moduloMenuUsuarioModel.set_01cif(personaModel.get_01cif());
+			moduloMenuUsuarioModel.set_02idmodulomenu((long)3);
+			moduloMenuUsuarioModel.set_03estado(1);
+			
+			menuUsuarioModel menuUsuarioModel = new menuUsuarioModel();
+			menuUsuarioModel.set_01cif(personaModel.get_01cif());
+			menuUsuarioModel.set_02idmenu((long)5);
+			menuUsuarioModel.set_03estado(1);
+			
+			this.menuUsuarioDao.save(menuUsuarioModel);
+			this.moduloMenuUsuarioDao.save(moduloMenuUsuarioModel);
+			
 			this.usuarioDao.save(usuarioModel);
 			
 		}

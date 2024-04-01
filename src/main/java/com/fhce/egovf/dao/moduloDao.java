@@ -11,6 +11,6 @@ import com.fhce.egovf.model.moduloUsuarioModel;
 public interface moduloDao extends JpaRepository<moduloModel,Long > {
 
 	@Query(value = "select * from modulo where id=?",nativeQuery=true)
-	moduloModel findModulo(Long id);
+	moduloModel getModulo(Long id);
 }
 
