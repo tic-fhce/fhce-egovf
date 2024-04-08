@@ -11,5 +11,7 @@ public interface moduloMenuUsuarioDao extends JpaRepository<moduloMenuUsuarioMod
 	
 	@Query(value = "select * from modulomenuusuario where _01cif = ? and _03estado = 1",nativeQuery=true)
 	List<moduloMenuUsuarioModel>getCif (Long cif);
-
+	
+	@Query(value = "select * from modulomenuusuario where _01cif = ? and _02idmodulomenu = ?",nativeQuery=true)
+	moduloMenuUsuarioModel getIdModuloMenu (Long cif,Long idmodulomenu);
 }

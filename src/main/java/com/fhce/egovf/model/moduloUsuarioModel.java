@@ -20,6 +20,10 @@ public class moduloUsuarioModel {
 	
 	@Column
 	private Long _02id_modulo;
+	
+	@Column
+	private int _03estado;
+	
 
 	public Long getId() {
 		return id;
@@ -38,5 +42,11 @@ public class moduloUsuarioModel {
 	}
 	public void set_02id_modulo(Long _02id_modulo) {
 		this._02id_modulo = _02id_modulo;
+	}
+	public int get_03estado() {
+		return _03estado;
+	}
+	public void set_03estado(int _03estado) {
+		this._03estado = _03estado;
 	}
 }
