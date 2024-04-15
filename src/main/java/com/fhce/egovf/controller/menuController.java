@@ -184,4 +184,9 @@ public class menuController {
 	public void addPerfil(@RequestBody menuUsuarioModel menuUsuarioModel) {
 		this.menuUsuarioDao.save(menuUsuarioModel);
 	}
+	
+	@PostMapping("/addMenuUsuario")
+	public void addMenuUsuario(@RequestBody menuUsuarioModel menuUsuarioModel) {
+		this.menuUsuarioDao.save(menuUsuarioModel);
+	}
 }
