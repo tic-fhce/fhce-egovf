@@ -53,7 +53,7 @@ public class menuController {
 	public List<moduloObj> getMenu(@RequestParam (value="cif") Long cif){
 		
 		List<modulomenuModel>listaModuloMenu = this.modulomenuDao.findAll(); // llamamos todos los modulos del menu
-		List<modulomenuModel>listaModuloMenuAux = new ArrayList<modulomenuModel>(); // Creamos lista Auxiliar apara hacer la discriminacion
+		List<modulomenuModel>listaModuloMenuAux = new ArrayList<modulomenuModel>(); // Creamos lista Auxiliar para hacer la discriminacion
 		
 		List<menuModel>listaMenuModel = this.menuDao.findAll(); // llamamos todo el menu
 		List<menuModel>listaMenuModelAux = new ArrayList<menuModel>(); // creamos lista Auxiliar para hacer la discriminacion
@@ -61,7 +61,7 @@ public class menuController {
 		
 		List<moduloObj>menu = new ArrayList<moduloObj>(); //Creamos una lista para el Objeto Modulo
 		moduloObj moduloObj; // creamos un Objeto modulo
-		List<menuObj>menuObj; // creamos un Objeto menu
+		List<menuObj>menuObj; // creamos un Objeto menu		
 		
 		//Seleccionamos los modulos permitidos para el usuario
 		List<moduloMenuUsuarioModel> moduloMenuUsuarioModel = this.moduloMenuUsuarioDao.getCif(cif); 
@@ -95,8 +95,19 @@ public class menuController {
 					menuObj.add(new menuObj(listaMenuModelAux.get(j).getId(),listaMenuModelAux.get(j).get_01titulo(),listaMenuModelAux.get(j).get_02ruta(),listaMenuModelAux.get(j).getId(),1));
 				}
 			}
-			moduloObj = new moduloObj(listaModuloMenuAux.get(i).getId(),listaModuloMenuAux.get(i).get_01titulo(),listaModuloMenuAux.get(i).get_02icono(),menuObj);
+			moduloObj = new moduloObj(listaModuloMenuAux.get(i).getId(),listaModuloMenuAux.get(i).get_01titulo(),listaModuloMenuAux.get(i).get_02icono(),menuObj,listaModuloMenuAux.get(i).get_03importancia());
 			menu.add(moduloObj);
+		}
+		
+		
+		for(int i=0;i<menu.size()-1;i++) { // ordemanos los modulos del menu por la importancia
+			for(int j=i+1;j<menu.size();j++) {
+				if(menu.get(i).getImportancia()>menu.get(j).getImportancia()) {
+					moduloObj menuAux = menu.get(i);
+					menu.set(i, menu.get(j));
+					menu.set(j, menuAux);
+				}
+			}
 		}
 		
 		for(int i=0;i<menu.size();i++) {
@@ -144,7 +155,7 @@ public class menuController {
 			}
 		}		
 		
-		moduloObj menu = new moduloObj(moduloMenuModel.getId(),moduloMenuModel.get_01titulo(),moduloMenuModel.get_02icono(),menuObj); //Creamos una lista para el Objeto Modulo
+		moduloObj menu = new moduloObj(moduloMenuModel.getId(),moduloMenuModel.get_01titulo(),moduloMenuModel.get_02icono(),menuObj,moduloMenuModel.get_03importancia()); //Creamos una lista para el Objeto Modulo
 		
 		return (menu);
 		

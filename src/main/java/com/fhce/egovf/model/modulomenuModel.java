@@ -21,6 +21,9 @@ public class modulomenuModel {
 	
 	@Column
 	private String _02icono;
+	
+	@Column
+	private int _03importancia;
 
 	public Long getId() {
 		return id;
@@ -45,5 +48,14 @@ public class modulomenuModel {
 	public void set_02icono(String _02icono) {
 		this._02icono = _02icono;
 	}
+
+	public int get_03importancia() {
+		return _03importancia;
+	}
+
+	public void set_03importancia(int _03importancia) {
+		this._03importancia = _03importancia;
+	}
+	
 
 }

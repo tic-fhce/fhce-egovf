@@ -8,12 +8,14 @@ public class moduloObj {
 	private String titulo;
 	private String icono;
 	private List<menuObj>menuObj;
+	private int importancia;
 	
-	public moduloObj(Long id,String titulo,String icono, List<com.fhce.egovf.obj.menuObj> menuObj) {
+	public moduloObj(Long id,String titulo,String icono, List<com.fhce.egovf.obj.menuObj> menuObj,int importancia) {
 		this.id = id;
 		this.titulo = titulo;
 		this.icono = icono;
 		this.menuObj = menuObj;
+		this.importancia = importancia;
 	}
 	public String getTitulo() {
 		return titulo;
@@ -38,6 +40,12 @@ public class moduloObj {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public int getImportancia() {
+		return importancia;
+	}
+	public void setImportancia(int importancia) {
+		this.importancia = importancia;
 	}
 	
 }
