@@ -34,6 +34,15 @@ public class moduloUsuarioModel {
 	
 	@Column (name = "_03estado")
 	private int estado;
+	
+	@Column (name = "_04cif") // quien registro el modulo
+	private Long quien;
+	
+	@Column (name = "_05fecha") // cuando se registro el modulo
+	private String fecha;
+	
+	@Column (name = "_06fecha") // cuando se modifico el modulo
+	private String fechamodificacion;
 
 }
 

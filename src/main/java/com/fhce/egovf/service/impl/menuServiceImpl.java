@@ -185,8 +185,14 @@ public class menuServiceImpl implements menuService{
 	
 	@Transactional
 	public menuUsuarioDtoResponse addMenuUsuario (menuUsuarioDtoRequest menuUsuarioDtoRequest) {
-		menuUsuarioModel menuUsuarioModel = this.modelMapper.map(menuUsuarioDtoRequest, menuUsuarioModel.class);
+		
+		menuUsuarioModel menuUsuarioModel = new menuUsuarioModel();
+		menuUsuarioModel.setCif(menuUsuarioDtoRequest.getCif());
+		menuUsuarioModel.setIdmenu(menuUsuarioDtoRequest.getIdmenu());
+		menuUsuarioModel.setEstado(menuUsuarioDtoRequest.getEstado());
+		
 		this.menuUsuarioDao.save(menuUsuarioModel);
+		
 		return this.modelMapper.map(menuUsuarioModel, menuUsuarioDtoResponse.class);
 	}
 }

@@ -3,16 +3,14 @@ package com.fhce.egovf.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
 import com.fhce.egovf.dao.personaDao;
 import com.fhce.egovf.dao.usuarioDao;
 import com.fhce.egovf.dto.ciudadanoDtoResponse;
 import com.fhce.egovf.model.personaModel;
 import com.fhce.egovf.model.usuarioModel;
 import com.fhce.egovf.service.ciudadanoService;
-import com.fhce.egovf.service.jwtService;
+
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

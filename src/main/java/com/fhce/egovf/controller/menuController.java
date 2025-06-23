@@ -82,7 +82,7 @@ public class menuController {
 	@PostMapping("/addMenuUsuario")
 	public ResponseEntity<menuUsuarioDtoResponse> addMenuUsuario(@RequestBody menuUsuarioDtoRequest menuUsuarioDtoRequest){
 		try {
-			return new ResponseEntity<>(this.menuService.addMenuUsuario(menuUsuarioDtoRequest),HttpStatus.OK);
+			return new ResponseEntity<>(this.menuService.addMenuUsuario(menuUsuarioDtoRequest),HttpStatus.CREATED);
 		}catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}

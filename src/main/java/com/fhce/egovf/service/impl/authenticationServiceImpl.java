@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.fhce.egovf.dao.usuarioDao;
@@ -25,20 +23,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class authenticationServiceImpl implements authenticationService{
 	
-	//private final UserRepository userRepository;
 	private final usuarioDao usuarioDao;
-	//private final PasswordEncoder passwordEncoder;
-	//private final AuthenticationManager authenticationManager;
 	private final jwtService jwtService;
-	/*public User signup(signUpRequest signUpRequest) {
-		User user = new User();
-		user.setEmail(signUpRequest.getEmail());
-		user.setFirsdtname(signUpRequest.getFirsName());
-		user.setSecondname(signUpRequest.getLastName());
-		user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
-		user.setRole(Role.USER);
-		return userRepository.save(user);
-	}*/
+
 	
 	public loginDtoResponse login(loginDtoRequest loginDtoRequest){
 		String password ="";
@@ -94,18 +81,6 @@ public class authenticationServiceImpl implements authenticationService{
 				
 		return loginDtoResponse;
 	}
-	/*public jwtAuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
-		String userEmail = jwtService.extractUserName(refreshTokenRequest.getToken());
-		User user = userRepository.findByEmail(userEmail).orElseThrow();
-		if(jwtService.isTokenValid(refreshTokenRequest.getToken(), user)) {
-			var jwt = jwtService.generateToken(user);
-			jwtAuthenticationResponse jwtAuthenticationResponse = new jwtAuthenticationResponse();
-			jwtAuthenticationResponse.setToken(jwt);
-			jwtAuthenticationResponse.setRefreshToken(refreshTokenRequest.getToken());
-			return jwtAuthenticationResponse;
-		}
-		return null;
-	}*/
 	public String pass(String password) throws Exception {
 		
 		MessageDigest md = MessageDigest.getInstance("SHA-256");

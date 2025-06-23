@@ -1,7 +1,5 @@
 package com.fhce.egovf.obj;
 
-import java.util.List;
-
 public class sesionObj {
 	
 	private String token;

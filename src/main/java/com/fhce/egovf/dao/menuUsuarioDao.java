@@ -12,6 +12,9 @@ public interface menuUsuarioDao extends JpaRepository<menuUsuarioModel, Long>{
 	@Query(value = "select * from menuusuario where _01cif = ? and _03estado = 1",nativeQuery=true)
 	List<menuUsuarioModel>getCif (Long cif);
 	
+	@Query(value = "select * from menuusuario where _01cif = ?",nativeQuery=true)
+	menuUsuarioModel findCif (Long cif);
+	
 	@Query(value = "select * from menuusuario where _01cif = ? ",nativeQuery=true)
 	List<menuUsuarioModel>getMenuUsuario (Long cif);
 

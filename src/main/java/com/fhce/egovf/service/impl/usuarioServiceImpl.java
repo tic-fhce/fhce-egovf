@@ -61,13 +61,20 @@ public class usuarioServiceImpl implements usuarioService{
 	public usuarioDtoResponse updateUsuario(usuarioDtoResponse usuarioDtoResponse) {
 		usuarioModel usuarioModel = this.modelMapper.map(usuarioDtoResponse, usuarioModel.class);
 		
+		//preguntamos su el usuario es empleado de tipo 2 para designarle en el menu el modulo SCC
 		if(usuarioModel.getEmpleado() == 2) {
-			menuUsuarioModel menuUsuarioModel = new menuUsuarioModel();
-			menuUsuarioModel.setCif(usuarioModel.getCif());
+			// Buscamos en la tabla menuUsuario si ya exsite 
+			menuUsuarioModel menuUsuarioModel = this.menuUsuarioDao.findCif(usuarioDtoResponse.getCif());
+			if(menuUsuarioModel == null) {
+				//si no existe creamos uno con el cif
+				menuUsuarioModel = new menuUsuarioModel();
+				menuUsuarioModel.setCif(usuarioModel.getCif());
+			}
 			menuUsuarioModel.setIdmenu((long)7);
 			menuUsuarioModel.setEstado(1);
 			this.menuUsuarioDao.save(menuUsuarioModel);
 		}
+		//
 		usuarioModel.setEmpleado(1);
 		this.usuarioDao.save(usuarioModel);
 		

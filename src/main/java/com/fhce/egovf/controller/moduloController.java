@@ -29,10 +29,10 @@ public class moduloController {
 	private final moduloService moduloService;
 	
 	@GetMapping("/getModulos")
-	public ResponseEntity<List<moduloResponse>> getListaModulos(){
+	public ResponseEntity<List<moduloResponse>> getListaModulos(@RequestParam (value="cif") Long cif){
 		// correcto funcionando 
 		try {
-			return new ResponseEntity<>(this.moduloService.getModulos(),HttpStatus.OK);
+			return new ResponseEntity<>(this.moduloService.getModulos(cif),HttpStatus.OK);
 		}catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -66,7 +66,7 @@ public class moduloController {
 	@PostMapping("/addModulo")
 	public ResponseEntity<moduloUsuarioDtoResponse> addModulo(@RequestBody moduloUsuarioDtoRequest moduloUsuarioDtoRequest){
 		try {
-			return new ResponseEntity<>(this.moduloService.addModulo(moduloUsuarioDtoRequest),HttpStatus.OK);
+			return new ResponseEntity<>(this.moduloService.addModulo(moduloUsuarioDtoRequest),HttpStatus.CREATED);
 		}catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
