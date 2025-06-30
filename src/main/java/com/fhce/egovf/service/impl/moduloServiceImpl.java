@@ -150,21 +150,19 @@ public class moduloServiceImpl implements moduloService{
 	
 	@Transactional 
 	public moduloUsuarioDtoResponse updateModuloUsuario(moduloUsuarioDtoResponse moduloUsuarioDtoResponse) {
-		
+		LocalDateTime fechaHoraActual = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String fechaFormateada = fechaHoraActual.format(formatter);
+        
 		List<moduloUsuarioModel>lista = this.moduloUsuarioDao.findModuloUsuario(moduloUsuarioDtoResponse.getCif()); //seleccionamos una lista del usuario y sus modulos
 		moduloUsuarioModel aux;
 		for(int i=0;i<lista.size();i++) {
 			aux=lista.get(i);
-			if(aux.getId_modulo() == moduloUsuarioDtoResponse.getId_modulo()) { // preguntamos si el id del modulo coinside con el id del usuario
-				aux.setEstado(moduloUsuarioDtoResponse.getEstado());
-				this.moduloUsuarioDao.save(aux);
-			}
+			aux.setEstado(moduloUsuarioDtoResponse.getEstado());
+			aux.setQuien(moduloUsuarioDtoResponse.getQuien());
+			aux.setFechamodificacion(fechaFormateada);
+			this.moduloUsuarioDao.save(aux);
 		}
-		moduloModel moduloModel = this.moduloDao.getModulo(moduloUsuarioDtoResponse.getId_modulo()); // seleccionamos el modulo para obtener el Id del Menu
-		moduloMenuUsuarioModel moduloMenuUsuarioModel = this.moduloMenuUsuarioDao.getIdModuloMenu(moduloUsuarioDtoResponse.getCif(),moduloModel.getId()); //seleccionamos el menu del usuario segun su mmodulo
-		moduloMenuUsuarioModel.setEstado(moduloUsuarioDtoResponse.getEstado()); // cambiamos el estado
-		this.moduloMenuUsuarioDao.save(moduloMenuUsuarioModel);
-		
 		return (moduloUsuarioDtoResponse);
 		
 	}
