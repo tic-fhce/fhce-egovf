@@ -12,4 +12,7 @@ public interface moduloUsuarioDao extends JpaRepository<moduloUsuarioModel,Long>
 	@Query(value = "select * from modulousuario where _01cif=?",nativeQuery=true)
 	List<moduloUsuarioModel>findModuloUsuario(Long cif);
 
+	@Query(value = "select * from modulousuario where _01cif=? and _02id_modulo=?",nativeQuery=true)
+	List<moduloUsuarioModel>findModuloUsuario(Long cif, Long id);
+
 }

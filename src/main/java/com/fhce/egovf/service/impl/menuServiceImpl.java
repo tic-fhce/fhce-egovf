@@ -12,7 +12,6 @@ import com.fhce.egovf.dao.menuUsuarioDao;
 import com.fhce.egovf.dao.moduloMenuDao;
 import com.fhce.egovf.dao.moduloMenuUsuarioDao;
 import com.fhce.egovf.dao.permisoDao;
-import com.fhce.egovf.dto.menuDtoObj;
 import com.fhce.egovf.dto.menuDtoResponse;
 import com.fhce.egovf.dto.menuUsuarioDtoRequest;
 import com.fhce.egovf.dto.menuUsuarioDtoResponse;
@@ -21,8 +20,6 @@ import com.fhce.egovf.dto.permisoDtoRequest;
 import com.fhce.egovf.dto.permisoDtoResponse;
 import com.fhce.egovf.model.menuModel;
 import com.fhce.egovf.model.menuUsuarioModel;
-import com.fhce.egovf.model.moduloMenuModel;
-import com.fhce.egovf.model.moduloMenuUsuarioModel;
 import com.fhce.egovf.model.permisoModel;
 import com.fhce.egovf.service.menuService;
 
@@ -33,9 +30,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class menuServiceImpl implements menuService{
 	
-	private final moduloMenuDao moduloMenuDao;
 	private final menuDao menuDao;
-	private final moduloMenuUsuarioDao moduloMenuUsuarioDao;
 	private final menuUsuarioDao menuUsuarioDao;
 	private final ModelMapper modelMapper;
 	private final permisoDao permisoDao;

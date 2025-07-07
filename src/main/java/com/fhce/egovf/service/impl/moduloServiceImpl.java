@@ -21,7 +21,6 @@ import com.fhce.egovf.dto.moduloUsuarioDtoRequest;
 import com.fhce.egovf.dto.moduloUsuarioDtoResponse;
 import com.fhce.egovf.model.menuModel;
 import com.fhce.egovf.model.menuUsuarioModel;
-import com.fhce.egovf.model.moduloMenuUsuarioModel;
 import com.fhce.egovf.model.moduloModel;
 import com.fhce.egovf.model.moduloUsuarioModel;
 import com.fhce.egovf.service.moduloService;
@@ -36,7 +35,6 @@ public class moduloServiceImpl implements moduloService{
 	private final moduloDao moduloDao;
 	private final ModelMapper modelMapper;
 	private final moduloUsuarioDao moduloUsuarioDao;
-	private final moduloMenuUsuarioDao moduloMenuUsuarioDao;
 	private final menuDao menuDao;
 	private final menuUsuarioDao menuUsuarioDao;
 	
@@ -94,13 +92,13 @@ public class moduloServiceImpl implements moduloService{
 		List<menuDtoObj> menuDtoObj;
 		for (int i=0;i<moduloUsuario.size();i++) {
 			for(int j=0;j<modulo.size();j++) {
-				if(moduloUsuario.get(i).getId_modulo().longValue() == modulo.get(j).getId().longValue()) {
-					//preguntamos si el usuario tiene el modulo correspondiente
+				if(moduloUsuario.get(i).getId_modulo().longValue() == modulo.get(j).getId().longValue() && moduloUsuario.get(i).getEstado()==1) {
+					//preguntamos si el usuario tiene el modulo correspondiente y si esta activo
 					menuDtoObj = new ArrayList<menuDtoObj>();
 					
 					for(int k = 0; k< menuModel.size();k++) {
 						for(int l=0;l<menuUsuario.size();l++) {
-							if((modulo.get(j).getId().longValue() == menuModel.get(k).getIdModulo().longValue()) && menuModel.get(k).getId().longValue() == menuUsuario.get(l).getIdmenu().longValue() ) {
+							if((modulo.get(j).getId().longValue() == menuModel.get(k).getIdModulo().longValue()) && menuModel.get(k).getId().longValue() == menuUsuario.get(l).getIdmenu().longValue() && menuUsuario.get(l).getEstado()==1) {
 								//preguntamos si se encuantra en el modulo el menu y el usuario
 								menuDtoObj.add(new menuDtoObj(menuModel.get(k).getId(),menuModel.get(k).getTitulo(),menuModel.get(k).getRuta(),menuModel.get(k).getIcono(),menuModel.get(k).getIdModulo(),menuModel.get(k).getDescripcion()));
 							}
@@ -150,11 +148,12 @@ public class moduloServiceImpl implements moduloService{
 	
 	@Transactional 
 	public moduloUsuarioDtoResponse updateModuloUsuario(moduloUsuarioDtoResponse moduloUsuarioDtoResponse) {
+		
 		LocalDateTime fechaHoraActual = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         String fechaFormateada = fechaHoraActual.format(formatter);
         
-		List<moduloUsuarioModel>lista = this.moduloUsuarioDao.findModuloUsuario(moduloUsuarioDtoResponse.getCif()); //seleccionamos una lista del usuario y sus modulos
+		List<moduloUsuarioModel>lista = this.moduloUsuarioDao.findModuloUsuario(moduloUsuarioDtoResponse.getCif(),moduloUsuarioDtoResponse.getId_modulo()); //seleccionamos una lista del usuario y sus modulos
 		moduloUsuarioModel aux;
 		for(int i=0;i<lista.size();i++) {
 			aux=lista.get(i);
@@ -163,6 +162,17 @@ public class moduloServiceImpl implements moduloService{
 			aux.setFechamodificacion(fechaFormateada);
 			this.moduloUsuarioDao.save(aux);
 		}
+		List<menuModel>menu= this.menuDao.getMenu(moduloUsuarioDtoResponse.getId_modulo());
+		List<menuUsuarioModel>menuUsuario = this.menuUsuarioDao.getCif(moduloUsuarioDtoResponse.getCif());
+		for(int i=0 ; i<menu.size();i++) {
+			for(int j=0;j<menuUsuario.size();j++) {
+				if(menuUsuario.get(j).getIdmenu().longValue()==menu.get(i).getId().longValue()) {
+					menuUsuario.get(j).setEstado(moduloUsuarioDtoResponse.getEstado());
+					this.menuUsuarioDao.save(menuUsuario.get(j));
+				}
+			}
+		}
+		
 		return (moduloUsuarioDtoResponse);
 		
 	}
