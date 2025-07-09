@@ -143,6 +143,20 @@ public class moduloServiceImpl implements moduloService{
 		moduloUsuarioModel.setFechamodificacion(fechaFormateada);
 		moduloUsuarioModel.setQuien(moduloUsuarioDtoRequest.getQuien());
 		this.moduloUsuarioDao.save(moduloUsuarioModel);
+		
+		List<menuModel>menuModel = this.menuDao.getMenu(moduloUsuarioModel.getId_modulo());
+		menuUsuarioModel menuUsuarioModel;
+		
+		//creamos el menu correspondiente al modulo 
+		for(int i=0;i<menuModel.size();i++) {
+			menuUsuarioModel = new menuUsuarioModel();
+			menuUsuarioModel.setCif(moduloUsuarioDtoRequest.getCif());
+			menuUsuarioModel.setIdmenu(menuModel.get(i).getId());
+			menuUsuarioModel.setEstado(1);
+			this.menuUsuarioDao.save(menuUsuarioModel);
+		}
+		
+		
 		return this.modelMapper.map(moduloUsuarioModel,moduloUsuarioDtoResponse.class); 
 	}
 	

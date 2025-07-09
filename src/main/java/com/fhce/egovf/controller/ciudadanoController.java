@@ -30,6 +30,14 @@ public class ciudadanoController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	@GetMapping ("/getListaCiudadanoPublico")
+	public ResponseEntity<List<ciudadanoDtoResponse>>getListaCiudadanoPublico(){
+		try {
+			return new ResponseEntity<>(this.ciudadanoService.getListaCiudadanoPublico(),HttpStatus.OK);
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	@GetMapping("/getEgovf")
 	public ResponseEntity <ciudadanoDtoResponse> getEgovf(@RequestParam (value="cif") Long cif) {
 		try {

@@ -70,7 +70,7 @@ public class usuarioServiceImpl implements usuarioService{
 				menuUsuarioModel = new menuUsuarioModel();
 				menuUsuarioModel.setCif(usuarioModel.getCif());
 			}
-			menuUsuarioModel.setIdmenu((long)7);
+			menuUsuarioModel.setIdmenu((long)16);
 			menuUsuarioModel.setEstado(1);
 			this.menuUsuarioDao.save(menuUsuarioModel);
 		}

@@ -2,20 +2,25 @@ package com.fhce.egovf.service.impl;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import com.fhce.egovf.dao.menuDao;
 import com.fhce.egovf.dao.menuUsuarioDao;
 import com.fhce.egovf.dao.moduloMenuUsuarioDao;
+import com.fhce.egovf.dao.moduloUsuarioDao;
 import com.fhce.egovf.dao.personaDao;
 import com.fhce.egovf.dao.usuarioDao;
 import com.fhce.egovf.dto.personaDtoRequest;
 import com.fhce.egovf.dto.personaDtoResponse;
+import com.fhce.egovf.model.menuModel;
 import com.fhce.egovf.model.menuUsuarioModel;
-import com.fhce.egovf.model.moduloMenuUsuarioModel;
+import com.fhce.egovf.model.moduloUsuarioModel;
 import com.fhce.egovf.model.personaModel;
 import com.fhce.egovf.model.usuarioModel;
 import com.fhce.egovf.service.personaService;
@@ -32,6 +37,8 @@ public class personaServiceImpl implements personaService{
 	private final menuUsuarioDao menuUsuarioDao;
 	private final moduloMenuUsuarioDao moduloMenuUsuarioDao;
 	private final usuarioDao usuarioDao;
+	private final moduloUsuarioDao moduloUsuarioDao; 
+	private final menuDao menuDao;
 	
 	@Transactional
 	public personaDtoResponse getPersona(Long cif) {
@@ -50,9 +57,14 @@ public class personaServiceImpl implements personaService{
 	
 	@Transactional
 	public personaDtoResponse addPersona(personaDtoRequest personaDtoRequest) throws Exception {
+		
+		LocalDateTime fechaHoraActual = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        String fechaFormateada = fechaHoraActual.format(formatter);
+        
 		String c="00";
 		Long aux=null;
-		
+		//Creamos el codigo CIF de la persona
 		for(int i=0;i<100;i++) {	
 			if (i<10)
 				c="0"+Integer.toString(i);
@@ -62,28 +74,50 @@ public class personaServiceImpl implements personaService{
 			if(this.personaDao.getCif(aux).size()==0)
 				break;
 		}
+		
+		//Creamos a la persona
 		personaDtoRequest.setCif(aux);
-		personaModel personaModel = this.modelMapper.map(personaDtoRequest, personaModel.class);
+		personaModel personaModel = new personaModel(); 
+		personaModel.setCif(aux);
+		personaModel.setCi(personaDtoRequest.getCi());
+		personaModel.setComplemento(personaDtoRequest.getComplemento());
+		personaModel.setNombre(personaDtoRequest.getNombre());
+		personaModel.setPaterno(personaDtoRequest.getPaterno());
+		personaModel.setMaterno(personaDtoRequest.getMaterno());
+		personaModel.setFecha(personaDtoRequest.getFecha());
+		personaModel.setSexo(personaDtoRequest.getSexo());
+		personaModel.setCel(personaDtoRequest.getCel());
+		personaModel.setCorreo(personaDtoRequest.getCorreo());
 		this.personaDao.save(personaModel);
 		
+		//Creamos al Usuario
 		usuarioModel usuarioModel = new usuarioModel(personaModel.getCif(),(long)0,personaModel.getCi(),personaModel.getComplemento()
-				,personaModel.getCorreo(),personaModel.getCel(),pass(personaModel.getCif().toString()),"nn","nn","Unidad","https://fhcevirtual.umsa.bo/egovf-img/imagenes/user.png",0);
-		
-		moduloMenuUsuarioModel moduloMenuUsuarioModel = new moduloMenuUsuarioModel();
-		moduloMenuUsuarioModel.setCif(personaModel.getCif());
-		moduloMenuUsuarioModel.setIdmodulomenu((long)3);
-		moduloMenuUsuarioModel.setEstado(1);
-		
-		menuUsuarioModel menuUsuarioModel = new menuUsuarioModel();
-		menuUsuarioModel.setCif(personaModel.getCif());
-		menuUsuarioModel.setIdmenu((long)5);
-		menuUsuarioModel.setEstado(1);
-		
-		this.menuUsuarioDao.save(menuUsuarioModel);
-		this.moduloMenuUsuarioDao.save(moduloMenuUsuarioModel);
+				,personaModel.getCorreo(),personaModel.getCel(),pass(personaModel.getCif().toString()),"nn","nn","Unidad","user.png",0);
 		
 		this.usuarioDao.save(usuarioModel);
-
+		
+		//creamos el modulo Ciudadano para el usuario por defecto
+		moduloUsuarioModel moduloUsuarioModel = new moduloUsuarioModel();
+		moduloUsuarioModel.setCif(personaModel.getCif());
+		moduloUsuarioModel.setId_modulo((long)6);
+		moduloUsuarioModel.setFecha(fechaFormateada);
+		moduloUsuarioModel.setEstado(1);
+		moduloUsuarioModel.setFechamodificacion(fechaFormateada);
+		moduloUsuarioModel.setQuien(aux);
+		this.moduloUsuarioDao.save(moduloUsuarioModel);
+		
+		List<menuModel>menuModel = this.menuDao.getMenu(moduloUsuarioModel.getId_modulo());
+		menuUsuarioModel menuUsuarioModel;
+		
+		//creamos el menu correspondiente al modulo 
+		for(int i=0;i<menuModel.size();i++) {
+			menuUsuarioModel = new menuUsuarioModel();
+			menuUsuarioModel.setCif(personaModel.getCif());
+			menuUsuarioModel.setIdmenu(menuModel.get(i).getId());
+			menuUsuarioModel.setEstado(1);
+			this.menuUsuarioDao.save(menuUsuarioModel);
+		}
+		
 		return(this.modelMapper.map(personaModel, personaDtoResponse.class));
 		
 	}

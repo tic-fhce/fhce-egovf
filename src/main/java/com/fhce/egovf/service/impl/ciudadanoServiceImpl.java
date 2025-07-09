@@ -66,6 +66,34 @@ public class ciudadanoServiceImpl implements ciudadanoService{
 	}
 	
 	@Transactional
+	public List<ciudadanoDtoResponse> getListaCiudadanoPublico() {
+		
+		List<personaModel>persona=this.personaDao.findAll();
+		List<usuarioModel>usuario=this.usuarioDao.findAll();
+		
+		List<ciudadanoDtoResponse>ciudadanos = new ArrayList<ciudadanoDtoResponse>();
+		for(int i=0;i<persona.size();i++) {
+			for(int j=0;j<usuario.size();j++) {
+				if((persona.get(i).getCif().longValue() == usuario.get(j).getCif().longValue()) && !"UTIC.png".equals(usuario.get(j).getFoto())) {
+					personaModel personaModel=persona.get(i);
+					usuarioModel usuarioModel=usuario.get(j);			
+					
+					ciudadanoDtoResponse ciudadanoDtoResponse = new ciudadanoDtoResponse(personaModel.getId(),personaModel.getNombre(),
+							personaModel.getPaterno(),personaModel.getMaterno(),personaModel.getFecha(),personaModel.getSexo(),
+							usuarioModel.getId(),usuarioModel.getCif(),usuarioModel.getMatricula(),usuarioModel.getCi()+" "+usuarioModel.getComplemento(),
+							usuarioModel.getCi(),usuarioModel.getComplemento(),usuarioModel.getCorreo(),usuarioModel.getCelular(),
+							usuarioModel.getPass(),usuarioModel.getUnidad(),usuarioModel.getDependiente(),usuarioModel.getSigla(),
+							usuarioModel.getFoto(),usuarioModel.getEmpleado());
+					
+					ciudadanos.add(ciudadanoDtoResponse);
+					break;
+				}
+			}
+		}
+		return(ciudadanos);
+	}
+	
+	@Transactional
 	public List<ciudadanoDtoResponse> getListaEmpleado() {
 		List<personaModel>persona=this.personaDao.findAll();
 		List<usuarioModel>usuario=this.usuarioDao.findAll();
