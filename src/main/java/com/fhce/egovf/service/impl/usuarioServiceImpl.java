@@ -64,15 +64,14 @@ public class usuarioServiceImpl implements usuarioService{
 		//preguntamos su el usuario es empleado de tipo 2 para designarle en el menu el modulo SCC
 		if(usuarioModel.getEmpleado() == 2) {
 			// Buscamos en la tabla menuUsuario si ya exsite 
-			menuUsuarioModel menuUsuarioModel = this.menuUsuarioDao.findCif(usuarioDtoResponse.getCif());
-			if(menuUsuarioModel == null) {
-				//si no existe creamos uno con el cif
-				menuUsuarioModel = new menuUsuarioModel();
-				menuUsuarioModel.setCif(usuarioModel.getCif());
+			List<menuUsuarioModel> menuUsuarioModel = this.menuUsuarioDao.getMenuUsuario(usuarioDtoResponse.getCif());
+			for(int i=0;i<menuUsuarioModel.size();i++) {
+				if(menuUsuarioModel.get(i).getIdmenu().longValue()==(long)16) {
+					menuUsuarioModel.get(i).setEstado(1);
+					this.menuUsuarioDao.save(menuUsuarioModel.get(i));
+					break;
+				}
 			}
-			menuUsuarioModel.setIdmenu((long)16);
-			menuUsuarioModel.setEstado(1);
-			this.menuUsuarioDao.save(menuUsuarioModel);
 		}
 		//
 		usuarioModel.setEmpleado(1);

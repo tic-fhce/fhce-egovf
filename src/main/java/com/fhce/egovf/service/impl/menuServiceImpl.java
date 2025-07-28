@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 import com.fhce.egovf.dao.menuDao;
 import com.fhce.egovf.dao.menuUsuarioDao;
-import com.fhce.egovf.dao.moduloMenuDao;
-import com.fhce.egovf.dao.moduloMenuUsuarioDao;
 import com.fhce.egovf.dao.permisoDao;
 import com.fhce.egovf.dto.menuDtoResponse;
 import com.fhce.egovf.dto.menuUsuarioDtoRequest;
@@ -180,14 +178,19 @@ public class menuServiceImpl implements menuService{
 	
 	@Transactional
 	public menuUsuarioDtoResponse addMenuUsuario (menuUsuarioDtoRequest menuUsuarioDtoRequest) {
-		
-		menuUsuarioModel menuUsuarioModel = new menuUsuarioModel();
-		menuUsuarioModel.setCif(menuUsuarioDtoRequest.getCif());
-		menuUsuarioModel.setIdmenu(menuUsuarioDtoRequest.getIdmenu());
+		//Buscamos si el Usuario ya tiene el menu con el cif y el id de Menu
+		menuUsuarioModel menuUsuarioModel = this.menuUsuarioDao.getMenuUsuario(menuUsuarioDtoRequest.getCif(), menuUsuarioDtoRequest.getIdmenu());
+		if(menuUsuarioModel == null) {
+			// si el menu del usuario no existiera se crea con el cif y el id del menu 
+			menuUsuarioModel = new menuUsuarioModel();
+			menuUsuarioModel.setCif(menuUsuarioDtoRequest.getCif());
+			menuUsuarioModel.setIdmenu(menuUsuarioDtoRequest.getIdmenu());
+		}
 		menuUsuarioModel.setEstado(menuUsuarioDtoRequest.getEstado());
 		
 		this.menuUsuarioDao.save(menuUsuarioModel);
 		
 		return this.modelMapper.map(menuUsuarioModel, menuUsuarioDtoResponse.class);
 	}
+	
 }

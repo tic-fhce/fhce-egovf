@@ -41,9 +41,7 @@ public class moduloServiceImpl implements moduloService{
 	@Transactional
 	public List<moduloResponse>getModulos(Long cif){
 		
-		List<moduloResponse> modulos = this.moduloDao.findAll().stream()
-				.map(modulo ->this.modelMapper.map(modulo, moduloResponse.class))
-				.collect(Collectors.toList());
+		List<moduloModel> modulos = this.moduloDao.findAll();
 		
 		List<moduloUsuarioModel>umodulos = this.moduloUsuarioDao.findModuloUsuario(cif);
 		
@@ -52,12 +50,20 @@ public class moduloServiceImpl implements moduloService{
 		for (int i=0;i<modulos.size();i++) {
 			verificador = true;
 			for(int j=0;j<umodulos.size();j++) {
-				if(modulos.get(i).getId().longValue()==umodulos.get(j).getId_modulo().longValue())
+				if(modulos.get(i).getId().longValue()==umodulos.get(j).getId_modulo().longValue()) {
 					verificador = false;
 					break;
+				}
 			}
 			if(verificador) {
-				selector.add(modulos.get(i));
+				moduloResponse aux = new moduloResponse();
+				aux.setId(modulos.get(i).getId());
+				aux.setDescripcion(modulos.get(i).getDescripcion());
+				aux.setImagen(modulos.get(i).getImagen());
+				aux.setNombre(modulos.get(i).getNombre());
+				aux.setRuta(modulos.get(i).getRuta());
+				aux.setTipo(modulos.get(i).getTipo());
+				selector.add(aux);
 			}
 		}
 		
@@ -152,7 +158,7 @@ public class moduloServiceImpl implements moduloService{
 			menuUsuarioModel = new menuUsuarioModel();
 			menuUsuarioModel.setCif(moduloUsuarioDtoRequest.getCif());
 			menuUsuarioModel.setIdmenu(menuModel.get(i).getId());
-			menuUsuarioModel.setEstado(1);
+			menuUsuarioModel.setEstado(0);
 			this.menuUsuarioDao.save(menuUsuarioModel);
 		}
 		
