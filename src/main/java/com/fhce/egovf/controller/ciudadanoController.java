@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fhce.egovf.dto.ciudadanoDtoResponse;
+import com.fhce.egovf.obj.responsableObj;
 import com.fhce.egovf.service.ciudadanoService;
 
 import lombok.RequiredArgsConstructor;
@@ -50,6 +51,15 @@ public class ciudadanoController {
 	public ResponseEntity <List<ciudadanoDtoResponse>> getListaEmpleado() {
 		try {
 			return new ResponseEntity<>(this.ciudadanoService.getListaEmpleado(),HttpStatus.OK);
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/getListaResponsable")
+	public ResponseEntity <List<responsableObj>> getListaResponsable() {
+		try {
+			return new ResponseEntity<>(this.ciudadanoService.getListaResponsable(),HttpStatus.OK);
 		}catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}

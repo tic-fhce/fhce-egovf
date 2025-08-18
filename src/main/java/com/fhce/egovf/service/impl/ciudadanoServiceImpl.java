@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+
 import com.fhce.egovf.dao.personaDao;
 import com.fhce.egovf.dao.usuarioDao;
 import com.fhce.egovf.dto.ciudadanoDtoResponse;
 import com.fhce.egovf.model.personaModel;
 import com.fhce.egovf.model.usuarioModel;
+import com.fhce.egovf.obj.responsableObj;
 import com.fhce.egovf.service.ciudadanoService;
-
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -119,5 +120,22 @@ public class ciudadanoServiceImpl implements ciudadanoService{
 		return ciudadano;
 		
 	}
-
+	
+	@Transactional
+	public List<responsableObj> getListaResponsable() {
+		List<personaModel>persona=this.personaDao.findAll();
+		
+		List<responsableObj>ciudadanos=new ArrayList<responsableObj>();
+		responsableObj responsableObj;
+		for(int i=0;i<persona.size();i++) {
+			responsableObj = new responsableObj();
+			responsableObj.setId(persona.get(i).getId());
+			responsableObj.setCif(persona.get(i).getCif());
+			responsableObj.setNombre(persona.get(i).getNombre()+" "+persona.get(i).getPaterno()+" "+persona.get(i).getMaterno());
+			responsableObj.setCi(persona.get(i).getCi()+" "+persona.get(i).getComplemento());
+			responsableObj.setCelular(persona.get(i).getCel());
+			ciudadanos.add(responsableObj);
+		}
+		return ciudadanos;
+	}
 }
