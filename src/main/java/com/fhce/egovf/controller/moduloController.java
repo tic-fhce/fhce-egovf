@@ -17,6 +17,7 @@ import com.fhce.egovf.dto.moduloDtoResponse;
 import com.fhce.egovf.dto.moduloResponse;
 import com.fhce.egovf.dto.moduloUsuarioDtoRequest;
 import com.fhce.egovf.dto.moduloUsuarioDtoResponse;
+import com.fhce.egovf.obj.moduloObj;
 import com.fhce.egovf.service.moduloService;
 
 import lombok.RequiredArgsConstructor;
@@ -75,6 +76,14 @@ public class moduloController {
 	public ResponseEntity<moduloUsuarioDtoResponse> updateModuloUsuario(@RequestBody moduloUsuarioDtoResponse moduloUsuarioDtoResponse){
 		try {
 			return new ResponseEntity<>(this.moduloService.updateModuloUsuario(moduloUsuarioDtoResponse),HttpStatus.OK);
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	@GetMapping("/getModuloMenu")
+	public ResponseEntity<moduloObj> getModuloMenu(@RequestParam (value="cif") Long cif, @RequestParam (value="idModulo") Long idModulo){
+		try {
+			return new ResponseEntity<>(this.moduloService.getModuloMenu(cif,idModulo),HttpStatus.OK);
 		}catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}

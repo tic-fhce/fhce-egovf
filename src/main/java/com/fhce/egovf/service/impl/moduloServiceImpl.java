@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.fhce.egovf.dao.menuDao;
 import com.fhce.egovf.dao.menuUsuarioDao;
 import com.fhce.egovf.dao.moduloDao;
-import com.fhce.egovf.dao.moduloMenuUsuarioDao;
 import com.fhce.egovf.dao.moduloUsuarioDao;
 import com.fhce.egovf.dto.menuDtoObj;
 import com.fhce.egovf.dto.moduloDtoResponse;
@@ -23,6 +21,8 @@ import com.fhce.egovf.model.menuModel;
 import com.fhce.egovf.model.menuUsuarioModel;
 import com.fhce.egovf.model.moduloModel;
 import com.fhce.egovf.model.moduloUsuarioModel;
+import com.fhce.egovf.obj.menuObj;
+import com.fhce.egovf.obj.moduloObj;
 import com.fhce.egovf.service.moduloService;
 
 import jakarta.transaction.Transactional;
@@ -139,7 +139,7 @@ public class moduloServiceImpl implements moduloService{
 		LocalDateTime fechaHoraActual = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         String fechaFormateada = fechaHoraActual.format(formatter);
-        
+        int estado=0;
 		// Agregamos al Ciudadano en la tabla moduloUsuario
 		moduloUsuarioModel moduloUsuarioModel = new moduloUsuarioModel();
 		moduloUsuarioModel.setCif(moduloUsuarioDtoRequest.getCif());
@@ -153,12 +153,15 @@ public class moduloServiceImpl implements moduloService{
 		List<menuModel>menuModel = this.menuDao.getMenu(moduloUsuarioModel.getId_modulo());
 		menuUsuarioModel menuUsuarioModel;
 		
+		if(moduloUsuarioDtoRequest.getId_modulo().longValue()==(long)6) //Si es el modulo egovf se activan sus menus
+			estado=1;
+		
 		//creamos el menu correspondiente al modulo 
 		for(int i=0;i<menuModel.size();i++) {
 			menuUsuarioModel = new menuUsuarioModel();
 			menuUsuarioModel.setCif(moduloUsuarioDtoRequest.getCif());
 			menuUsuarioModel.setIdmenu(menuModel.get(i).getId());
-			menuUsuarioModel.setEstado(0);
+			menuUsuarioModel.setEstado(estado);
 			this.menuUsuarioDao.save(menuUsuarioModel);
 		}
 		
@@ -194,6 +197,35 @@ public class moduloServiceImpl implements moduloService{
 		}
 		
 		return (moduloUsuarioDtoResponse);
+		
+	}
+	
+	@Transactional
+	public moduloObj getModuloMenu(Long cif,Long idModulo){
+		
+		moduloModel moduloModel = this.moduloDao.getById(idModulo);
+		
+		List<menuModel> menuModel = this.menuDao.getMenu(idModulo);
+		List<menuUsuarioModel> menuUsuarioModel = this.menuUsuarioDao.getMenuUsuario(cif);
+		
+		List<menuObj> menuObj = new ArrayList<menuObj>();
+		menuObj menu;
+		for(int i=0;i<menuModel.size();i++) {
+			for(int j=0;j<menuUsuarioModel.size();j++) {
+				if(menuUsuarioModel.get(j).getIdmenu().longValue()==menuModel.get(i).getId().longValue()) {
+					menu = new menuObj(menuModel.get(i).getId(),menuModel.get(i).getTitulo(),
+							menuModel.get(i).getRuta(),menuModel.get(i).getIdModulo(),menuModel.get(i).getDescripcion(),
+							menuUsuarioModel.get(j).getId(),menuUsuarioModel.get(j).getEstado());
+					
+					menuObj.add(menu);
+					break;
+				}
+			}
+		}
+		
+		moduloObj moduloObj = new moduloObj(moduloModel.getId(),moduloModel.getNombre(),moduloModel.getImagen(),
+				menuObj,moduloModel.getTipo());
+		return(moduloObj);
 		
 	}
 

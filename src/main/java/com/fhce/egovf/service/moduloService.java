@@ -6,6 +6,7 @@ import com.fhce.egovf.dto.moduloDtoResponse;
 import com.fhce.egovf.dto.moduloResponse;
 import com.fhce.egovf.dto.moduloUsuarioDtoRequest;
 import com.fhce.egovf.dto.moduloUsuarioDtoResponse;
+import com.fhce.egovf.obj.moduloObj;
 
 public interface moduloService {
 	List<moduloResponse>getModulos(Long cif);
@@ -19,5 +20,7 @@ public interface moduloService {
 	List<moduloDtoResponse>getModuloCif(Long cif);
 	
 	List<moduloResponse>getModuloCifEmpleado(Long cif);
+	
+	moduloObj getModuloMenu(Long cif,Long idModulo);
 
 }
