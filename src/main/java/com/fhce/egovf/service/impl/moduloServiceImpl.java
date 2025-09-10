@@ -214,7 +214,7 @@ public class moduloServiceImpl implements moduloService{
 			for(int j=0;j<menuUsuarioModel.size();j++) {
 				if(menuUsuarioModel.get(j).getIdmenu().longValue()==menuModel.get(i).getId().longValue()) {
 					menu = new menuObj(menuModel.get(i).getId(),menuModel.get(i).getTitulo(),
-							menuModel.get(i).getRuta(),menuModel.get(i).getIdModulo(),menuModel.get(i).getDescripcion(),
+							menuModel.get(i).getRuta(),menuModel.get(i).getIcono(),menuModel.get(i).getIdModulo(),menuModel.get(i).getDescripcion(),
 							menuUsuarioModel.get(j).getId(),menuUsuarioModel.get(j).getEstado());
 					
 					menuObj.add(menu);

@@ -12,6 +12,7 @@ public class menuObj {
 	private Long idMenu;
 	private String titulo;
 	private String ruta;
+	private String icono;
 	private Long idModulo;
 	private String descripcion;
 

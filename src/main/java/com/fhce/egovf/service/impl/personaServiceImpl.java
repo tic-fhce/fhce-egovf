@@ -99,7 +99,7 @@ public class personaServiceImpl implements personaService{
 		//creamos el modulo Ciudadano para el usuario por defecto
 		moduloUsuarioModel moduloUsuarioModel = new moduloUsuarioModel();
 		moduloUsuarioModel.setCif(personaModel.getCif());
-		moduloUsuarioModel.setId_modulo((long)6);
+		moduloUsuarioModel.setId_modulo((long)1);
 		moduloUsuarioModel.setFecha(fechaFormateada);
 		moduloUsuarioModel.setEstado(1);
 		moduloUsuarioModel.setFechamodificacion(fechaFormateada);
@@ -114,7 +114,7 @@ public class personaServiceImpl implements personaService{
 			menuUsuarioModel = new menuUsuarioModel();
 			menuUsuarioModel.setCif(personaModel.getCif());
 			menuUsuarioModel.setIdmenu(menuModel.get(i).getId());
-			menuUsuarioModel.setEstado(1);
+			menuUsuarioModel.setEstado(0);
 			this.menuUsuarioDao.save(menuUsuarioModel);
 		}
 		
