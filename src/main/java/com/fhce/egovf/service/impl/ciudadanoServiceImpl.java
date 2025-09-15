@@ -41,7 +41,7 @@ public class ciudadanoServiceImpl implements ciudadanoService{
 	@Transactional
 	public List<ciudadanoDtoResponse> getListaCiudadano() {
 		
-		List<personaModel>persona=this.personaDao.findAll();
+		List<personaModel>persona=this.personaDao.getPersona();
 		List<usuarioModel>usuario=this.usuarioDao.findAll();
 		
 		List<ciudadanoDtoResponse>ciudadanos = new ArrayList<ciudadanoDtoResponse>();
@@ -69,7 +69,7 @@ public class ciudadanoServiceImpl implements ciudadanoService{
 	@Transactional
 	public List<ciudadanoDtoResponse> getListaCiudadanoPublico() {
 		
-		List<personaModel>persona=this.personaDao.findAll();
+		List<personaModel>persona=this.personaDao.getPersona();
 		List<usuarioModel>usuario=this.usuarioDao.findAll();
 		
 		List<ciudadanoDtoResponse>ciudadanos = new ArrayList<ciudadanoDtoResponse>();
@@ -96,8 +96,8 @@ public class ciudadanoServiceImpl implements ciudadanoService{
 	
 	@Transactional
 	public List<ciudadanoDtoResponse> getListaEmpleado() {
-		List<personaModel>persona=this.personaDao.findAll();
-		List<usuarioModel>usuario=this.usuarioDao.findAll();
+		List<personaModel>persona=this.personaDao.getPersona();
+		List<usuarioModel>usuario=this.usuarioDao.getEmpleado(1);
 		List<ciudadanoDtoResponse>ciudadano=new ArrayList<ciudadanoDtoResponse>();
 		for(int i=0;i<persona.size();i++) {
 			for(int j=0;j<usuario.size();j++) {

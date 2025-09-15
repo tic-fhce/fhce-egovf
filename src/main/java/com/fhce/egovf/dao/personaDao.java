@@ -24,5 +24,11 @@ public interface personaDao extends JpaRepository<personaModel,Long>{
 	
 	@Query (value="select * from persona where _01cif= ? ", nativeQuery=true)
 	personaModel getPerfil(Long cif);
+	
+	@Query (value="select * from persona where _01cif>0 ", nativeQuery=true)
+	List<personaModel> getPersona();
+	
+	@Query (value="select * from persona where _01cif = 0 ", nativeQuery=true)
+	List<personaModel> getPersonaCifCero();
 }
 

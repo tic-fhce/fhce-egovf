@@ -41,11 +41,27 @@ public class personaController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	@GetMapping("/getListaPersonaCifCero")
+	public ResponseEntity<List<personaDtoResponse>> getPersonaCifCero(){
+		try {
+			return new ResponseEntity<>(this.personaService.getListaPersonaCifCero(),HttpStatus.OK);
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
 	@PostMapping("/addPersona")
 	public ResponseEntity<personaDtoResponse> addPersona(@RequestBody personaDtoRequest personaDtoRequest){
 		try {
 			return new ResponseEntity<>(this.personaService.addPersona(personaDtoRequest),HttpStatus.CREATED);
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	@PostMapping("/addOnlyPersona")
+	public ResponseEntity<personaDtoResponse> addOnlyPersona(@RequestBody personaDtoRequest personaDtoRequest){
+		try {
+			return new ResponseEntity<>(this.personaService.addOnlyPersona(personaDtoRequest),HttpStatus.CREATED);
 		}catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}

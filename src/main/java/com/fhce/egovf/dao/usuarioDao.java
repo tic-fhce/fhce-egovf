@@ -55,6 +55,9 @@ public interface usuarioDao extends JpaRepository<usuarioModel, Long>{
 	@Query(value = "select * from usuario where _06celular=?",nativeQuery=true)
 	List<usuarioModel>getCelular(String celular);
 	
+	@Query(value = "select * from usuario where _12empleado=?",nativeQuery=true)
+	List<usuarioModel>getEmpleado(int tipo);
+	
 	//@Query(value = "select * from usuario where _01cif=?",nativeQuery=true)
 	//usuarioModel getUsuario(Long cif);
 	

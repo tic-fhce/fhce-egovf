@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fhce.egovf.dto.loginDtoRequest;
 import com.fhce.egovf.dto.loginDtoResponse;
 import com.fhce.egovf.service.authenticationService;
+import com.fhce.egovf.service.personaService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 public class loginController {
 	private final authenticationService authenticationService;
+	private final personaService personaService;
 	
 	@PostMapping ("/login")
 	public ResponseEntity<loginDtoResponse>login(@RequestBody loginDtoRequest loginDtoRequest){
@@ -28,5 +30,4 @@ public class loginController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
 }

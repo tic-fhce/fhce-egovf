@@ -56,6 +56,15 @@ public class personaServiceImpl implements personaService{
 	}
 	
 	@Transactional
+	public List<personaDtoResponse>getListaPersonaCifCero(){
+		List<personaDtoResponse>personas = this.personaDao.getPersonaCifCero().stream()
+				.map(persona -> this.modelMapper.map(persona, personaDtoResponse.class))
+				.collect(Collectors.toList());
+		
+		return(personas);
+	}
+	
+	@Transactional
 	public personaDtoResponse addPersona(personaDtoRequest personaDtoRequest) throws Exception {
 		
 		LocalDateTime fechaHoraActual = LocalDateTime.now();
@@ -143,6 +152,47 @@ public class personaServiceImpl implements personaService{
             hexString.append(String.format("%02x", b));
         }
 		return hexString.toString();
+	}
+	
+	@Transactional
+	public personaDtoResponse addOnlyPersona(personaDtoRequest personaDtoRequest) throws Exception {
+		
+		String c="00";
+		Long aux=null;
+		if(personaDtoRequest.getFecha().equals("fecha")) {
+			aux = (long)0;
+		}
+		else {
+			//Creamos el codigo CIF de la persona
+			for(int i=0;i<100;i++) {	
+				if (i<10)
+					c="0"+Integer.toString(i);
+				else 
+					c=Integer.toString(i);
+				aux=Long.parseLong(personaDtoRequest.cif(c));
+				if(this.personaDao.getCif(aux).size()==0)
+					break;
+			}
+			
+		}
+		
+		//Creamos a la persona
+		personaModel personaModel = new personaModel(); 
+		personaModel.setCif(aux);
+		personaModel.setCi(personaDtoRequest.getCi());
+		personaModel.setComplemento(personaDtoRequest.getComplemento());
+		personaModel.setNombre(personaDtoRequest.getNombre());
+		personaModel.setPaterno(personaDtoRequest.getPaterno());
+		personaModel.setMaterno(personaDtoRequest.getMaterno());
+		personaModel.setFecha(personaDtoRequest.getFecha());
+		personaModel.setSexo(personaDtoRequest.getSexo());
+		personaModel.setCel(personaDtoRequest.getCel());
+		personaModel.setCorreo(personaDtoRequest.getCorreo());
+		this.personaDao.save(personaModel);
+		
+		
+		return(this.modelMapper.map(personaModel, personaDtoResponse.class));
+		
 	}
 
 }
