@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -153,15 +155,12 @@ public class moduloServiceImpl implements moduloService{
 		List<menuModel>menuModel = this.menuDao.getMenu(moduloUsuarioModel.getId_modulo());
 		menuUsuarioModel menuUsuarioModel;
 		
-		if(moduloUsuarioDtoRequest.getId_modulo().longValue()==(long)6) //Si es el modulo egovf se activan sus menus
-			estado=1;
-		
 		//creamos el menu correspondiente al modulo 
 		for(int i=0;i<menuModel.size();i++) {
 			menuUsuarioModel = new menuUsuarioModel();
 			menuUsuarioModel.setCif(moduloUsuarioDtoRequest.getCif());
 			menuUsuarioModel.setIdmenu(menuModel.get(i).getId());
-			menuUsuarioModel.setEstado(estado);
+			menuUsuarioModel.setEstado(0);
 			this.menuUsuarioDao.save(menuUsuarioModel);
 		}
 		
@@ -177,6 +176,7 @@ public class moduloServiceImpl implements moduloService{
         String fechaFormateada = fechaHoraActual.format(formatter);
         
 		List<moduloUsuarioModel>lista = this.moduloUsuarioDao.findModuloUsuario(moduloUsuarioDtoResponse.getCif(),moduloUsuarioDtoResponse.getId_modulo()); //seleccionamos una lista del usuario y sus modulos
+		
 		moduloUsuarioModel aux;
 		for(int i=0;i<lista.size();i++) {
 			aux=lista.get(i);
@@ -199,7 +199,34 @@ public class moduloServiceImpl implements moduloService{
 		return (moduloUsuarioDtoResponse);
 		
 	}
-	
+	@Transactional 
+	public moduloUsuarioDtoResponse updateModulo(moduloUsuarioDtoResponse moduloUsuarioDtoResponse) {
+		        
+		List<menuModel>menuModel = this.menuDao.getMenu(moduloUsuarioDtoResponse.getId_modulo());
+		
+		List<menuUsuarioModel> menuUsuario = this.menuUsuarioDao.getMenuUsuario(moduloUsuarioDtoResponse.getCif());
+		
+		// Extraer los IDs de menu que están en menuUsuario
+		Set<Long> idsMenuUsuario = menuUsuario.stream()
+		        .map(menuUsuarioModel::getIdmenu)
+		        .collect(Collectors.toSet());
+		
+		menuModel.removeIf(menu -> idsMenuUsuario.contains(menu.getId()));
+		
+		menuUsuarioModel menuUsuarioModel;
+		
+		//creamos el menu correspondiente al modulo 
+		for(int i=0;i<menuModel.size();i++) {
+			menuUsuarioModel = new menuUsuarioModel();
+			menuUsuarioModel.setCif(moduloUsuarioDtoResponse.getCif());
+			menuUsuarioModel.setIdmenu(menuModel.get(i).getId());
+			menuUsuarioModel.setEstado(0);
+			this.menuUsuarioDao.save(menuUsuarioModel);
+		}
+		
+		return (moduloUsuarioDtoResponse);
+		
+	}
 	@Transactional
 	public moduloObj getModuloMenu(Long cif,Long idModulo){
 		

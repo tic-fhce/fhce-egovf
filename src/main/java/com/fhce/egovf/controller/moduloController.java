@@ -80,6 +80,14 @@ public class moduloController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	@PutMapping("/updateModulo")
+	public ResponseEntity<moduloUsuarioDtoResponse> updateModulo(@RequestBody moduloUsuarioDtoResponse moduloUsuarioDtoResponse){
+		try {
+			return new ResponseEntity<>(this.moduloService.updateModulo(moduloUsuarioDtoResponse),HttpStatus.OK);
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	@GetMapping("/getModuloMenu")
 	public ResponseEntity<moduloObj> getModuloMenu(@RequestParam (value="cif") Long cif, @RequestParam (value="idModulo") Long idModulo){
 		try {

@@ -16,6 +16,7 @@ public interface moduloService {
 	moduloUsuarioDtoResponse addModulo(moduloUsuarioDtoRequest moduloUsuarioDtoRequest);
 	
 	moduloUsuarioDtoResponse updateModuloUsuario(moduloUsuarioDtoResponse moduloUsuarioDtoResponse);
+	moduloUsuarioDtoResponse updateModulo(moduloUsuarioDtoResponse moduloUsuarioDtoResponse);
 	
 	List<moduloDtoResponse>getModuloCif(Long cif);
 	
